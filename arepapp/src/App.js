@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, Route, Routes ,BrowserRouter, Router } from "react-router-dom";
 
-import Registro from './component/registro';
-import Login from './component/login';
+import Registro from './pages/registro';
+import Login from './pages/login';
 import DetalleProducto from './component/DetalleProducto';
-import AdminView from './component/AdminView';
+import AdminView from './pages/AdminView';
 
 import AuthJWT from './helper/authJWT';
 import Container from 'react-bootstrap/Container';
