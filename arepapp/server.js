@@ -10,6 +10,7 @@ const secret = 'mysecretkey';
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
+  // eslint-disable-next-line no-unused-expressions
   db;
   res.send('Hola desde el servidor de Express!');
 });

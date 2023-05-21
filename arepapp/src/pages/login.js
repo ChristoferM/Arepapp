@@ -12,6 +12,8 @@ function Login (){
   const [confirmaciConcontrasenna, setConfirmaciConcontrasenna] = useState('');
   const [alerta, setAlerta] = useState(false);
 
+  
+
   function loginUsuario(){
 
   }
@@ -54,6 +56,8 @@ function Login (){
         <Button id= "card-registrarse-boton" 
         variant="primary" type="submit" onClick={loginUsuario}>Iniciar Sesion</Button>
       </Card>
+
+      
   </>
   )
 }

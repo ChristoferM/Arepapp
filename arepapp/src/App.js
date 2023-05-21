@@ -5,13 +5,24 @@ import Registro from './pages/registro';
 import Login from './pages/login';
 import DetalleProducto from './component/DetalleProducto';
 import AdminView from './pages/AdminView';
+import PagoView from './pages/PagoView'
+import ConfirmacionPedido from './component/ConfirmacionPedido';
 
 import AuthJWT from './helper/authJWT';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Button } from 'react-bootstrap';
 function App() {
+
+
+  const [showConfirmacion, setShowConfimacion] = React.useState(false);
+
+  const handleConfirmacion = () => setShowConfimacion(!showConfirmacion);
+
+
+
   return (
     <>
     <BrowserRouter>
@@ -26,10 +37,9 @@ function App() {
             <Nav.Link href="#link">
              <Link to="/registrarse" >Registrarse </Link>
             </Nav.Link>
-            {/*
             <Nav.Link href="#link">
-             <Link to="/token" >AuthJWT </Link>
-            </Nav.Link>*/ }
+             <Link to="/pago" >Pago </Link>
+            </Nav.Link>
             <Nav.Link href="#link">
             <Link to="/adminView" >admin View </Link>
            </Nav.Link>
@@ -43,9 +53,17 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/token" element={<Registro />} />
         <Route path="/adminView" element={<AdminView/>} />
+        <Route path="/Pago" element={<PagoView/>} />
       </Routes>
     </div>  
     </BrowserRouter>
+
+            {/*Button para confirmacion */}
+    <Button variant="primary" onClick={handleConfirmacion}>
+            launch
+    </Button>
+
+    {showConfirmacion && <ConfirmacionPedido show={showConfirmacion} handleClose={handleConfirmacion}  ConfirmacionPedido/>}
     </>
     
   );

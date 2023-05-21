@@ -1,16 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {Button,Container,Row,Col } from 'react-bootstrap';
-
-import AdminCardProduct from '../component/AdminCardProduct'
-
-import EditProduct from '../component/EditProduct';
-import DeleteProduct from '../component/DeleteProduct';
-import DetalleProducto from '../component/DetalleProducto';
-
-
-import {GetAllProducts} from '../api/peticiones.js'
-
-
+import {Button,Offcanvas} from 'react-bootstrap';
+import ConfirmationCardProduct from '../component/ConfirmationCardProduct';
 
 const data=[
     {
@@ -73,40 +63,9 @@ const data=[
 ]
 
 
-function AdminView(){
- 
+function ConfirmacionPedido({product, show, handleClose}){
 
     const [products, setProducts] = useState([]);
-    
-    const [showEdit, setShowEdit] = useState(false);
-    const [showDelete, setShowDelete] = useState(false);
-    const [showDetails, setShowDetails] = useState(false);
-    
-    const [selectedProduct, setSelectedProduct] = useState(null);
-
-    const handleExpandEdit = (product) => {
-        
-        setSelectedProduct(product)
-        setShowEdit(!showEdit);
-    };
-    
-    const handleExpandDelete = (product) => {
-        
-        setSelectedProduct(product)
-        setShowDelete(!showDelete);
-    };
-
-    const handleExpandDetails = (product) => {
-        
-        setSelectedProduct(product)
-        setShowDetails(!showDetails);
-    };
-
-
-
-
-
-    /*Logica de la peticion */
     useEffect(() => {
 
         // const response = GetAllProducts();
@@ -123,58 +82,34 @@ function AdminView(){
 
 
       }, []);
+    
 
 
-    return (
 
-        < >
-            
-            <h1 className='m-5 fw-bold text-center'>Administración de Productos</h1>
 
-            
-            <Container className='d-flex justify-content-end mw-100'>
-                <Button className=' rounded-pill p-3 text-black fw-semibold w-100' style={{border:'none',backgroundColor: '#FEC151',width: '100%'}}>Agregar Nuevo Producto</Button>
-            </Container>
-                
-                
-            <Row className="m-5 justify-content-center">
-                <Col md={12}>
-                
-                    <Row className='mx-5 justify-content-center'>
-                
-                        {products.map(product => (
-                            
-                            <Col className='mb-4' key={product.id} md={4} >
-                            <AdminCardProduct product={product} handleEdit={handleExpandEdit} handleDelete={handleExpandDelete} handleDetails={handleExpandDetails}/>
-                            </Col>
-                            
-                        ))}
-                                
-                    </Row>
-                </Col>
 
-            
-            </Row>
 
-            {showEdit && <EditProduct show={showEdit} handleEdit={handleExpandEdit} product={selectedProduct}/>}
-            {showDelete && <DeleteProduct show={showDelete} handleDelete={handleExpandDelete} product={selectedProduct}/>}
-            {showDetails && <DetalleProducto show={showDetails} handleDetails={handleExpandDetails} product={selectedProduct}/>}
+    return(
+
+        <>
+            <Offcanvas show={show} onHide={handleClose} placement='end'>
+                <Offcanvas.Header  className='rounded-bottom shadow-sm' style={{backgroundColor: '#FEC151',border:'none',}} closeButton>
+                    <Offcanvas.Title className='my-2 fw-bold' >Confirmación Pedido</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                {products.map(product => (
+
+                    <ConfirmationCardProduct product={product} />
                     
-                    
-                    
-                    
-                    
-                    
-        
+                ))}
+                    <Button id='button-pagar' className='rounded-pill text-black fw-bold p-3 w-100 my-2' style={{backgroundColor: '#FEC151', border: 'none' }}>Confirmar y pagar</Button>
+                </Offcanvas.Body>
+            </Offcanvas>
         </>
-
-
-
-
-
+        
 
     );
+
 }
 
-
-export default AdminView;
+export default ConfirmacionPedido
