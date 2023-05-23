@@ -3,20 +3,18 @@ import { Link, Route, Routes ,BrowserRouter, Router } from "react-router-dom";
 
 import Registro from './pages/registro';
 import Login from './pages/login';
-import DetalleProducto from './component/DetalleProducto';
 import AdminView from './pages/AdminView';
 import PagoView from './pages/PagoView'
 import ConfirmacionPedido from './component/ConfirmacionPedido';
 
-import AuthJWT from './helper/authJWT';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Button } from 'react-bootstrap';
 
 import { Provider } from 'react-redux';
-import store from './store'; // min 26:00
+import { store } from './store'; 
+
 function App() {
 
 
