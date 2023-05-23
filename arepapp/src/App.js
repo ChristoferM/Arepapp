@@ -1,10 +1,19 @@
 import React from 'react';
 import { Link, Route, Routes ,BrowserRouter, Router } from "react-router-dom";
 
+
+import botonUsuario from './assets/icons/boton usuario (2).svg'
+import botonCarrito from './assets/icons/boton de carrito (2).svg'
+import logo from './assets/icons/logo.svg'
+
+
+
+
 import Registro from './pages/registro';
 import Login from './pages/login';
 import DetalleProducto from './component/DetalleProducto';
 import AdminView from './pages/AdminView';
+import HomeView from './pages/HomeView'
 import PagoView from './pages/PagoView'
 import ConfirmacionPedido from './component/ConfirmacionPedido';
 
@@ -14,6 +23,13 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Button } from 'react-bootstrap';
+
+
+
+
+
+
+
 function App() {
 
 
@@ -26,23 +42,33 @@ function App() {
   return (
     <>
     <BrowserRouter>
-     <Navbar bg="light" expand="lg">
-      <Container>
-        <Navbar.Brand href="#home">Students App</Navbar.Brand>
+     <Navbar   style={{border:'none',backgroundColor: '#FEC151'}} expand="lg">
+      <Container >
+        <Navbar.Brand href="/">
+        <img src={logo} alt="Logo" width="50" height="50" />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#link">
-              <Link to="/" >Login </Link></Nav.Link>
-            <Nav.Link href="#link">
-             <Link to="/registrarse" >Registrarse </Link>
+          <Nav className="ms-auto">
+
+            <NavDropdown  title={<img src={botonUsuario} alt="Usuario" width="45" height="45" />} id="nav-usuario-dropdown">
+              <div>
+                <NavDropdown.Item >            
+                  <Nav.Link href="#link">
+                    <Link to="/login" >Login </Link>
+                  </Nav.Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item >            
+                  <Nav.Link href="#link">
+                    <Link to="/registrarse" >Registrarse </Link>
+                  </Nav.Link>
+                </NavDropdown.Item>
+              </div>  
+            </NavDropdown>
+            <Nav.Link>
+              <img src={botonCarrito} alt="Pago" width="45" height="45" onClick={handleConfirmacion}/>
             </Nav.Link>
-            <Nav.Link href="#link">
-             <Link to="/pago" >Pago </Link>
-            </Nav.Link>
-            <Nav.Link href="#link">
-            <Link to="/adminView" >admin View </Link>
-           </Nav.Link>
+
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -50,18 +76,14 @@ function App() {
     <div>
       <Routes>
         <Route path="/registrarse" element={<Registro />} />
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/token" element={<Registro />} />
         <Route path="/adminView" element={<AdminView/>} />
         <Route path="/Pago" element={<PagoView/>} />
+        <Route path="/" element={<HomeView/>} />
       </Routes>
     </div>  
     </BrowserRouter>
-
-            {/*Button para confirmacion */}
-    <Button variant="primary" onClick={handleConfirmacion}>
-            launch
-    </Button>
 
     {showConfirmacion && <ConfirmacionPedido show={showConfirmacion} handleClose={handleConfirmacion}  ConfirmacionPedido/>}
     </>

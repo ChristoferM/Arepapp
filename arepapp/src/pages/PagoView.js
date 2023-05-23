@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
-import ConfirmationCardProduct from '../component/ConfirmationCardProduct'
+import CardProduct from '../component/CardProduct'
 
 
 
@@ -176,7 +176,7 @@ function PagoView() {
                             <div className="h-100 overflow-auto">
                                 {products.map(product => (
 
-                                    <ConfirmationCardProduct product={product} />
+                                    <CardProduct product={product} />
                                     
                                 ))}
                             </div>    

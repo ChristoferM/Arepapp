@@ -1,6 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import {Button,Offcanvas} from 'react-bootstrap';
-import CardProduct from './CardProduct';
+import React, { useState, useEffect } from 'react'; 
+import {Button,Container,Row,Col } from 'react-bootstrap';
+
+
+import CardProduct from '../component/CardProduct'
+import DetalleProducto from '../component/DetalleProducto';
+
+import peticiones from '../api/peticiones.js';
+
+
+
+
+
 
 const data=[
     {
@@ -62,56 +72,99 @@ const data=[
     }
 ]
 
-
-function ConfirmacionPedido({product, show, handleClose}){
-
-    
+function HomeView(){
+     
 
     const [products, setProducts] = useState([]);
-    useEffect(() => {
-
-        // const response = GetAllProducts();
-        
-        // if (response !== Error){
-
-        //     setProducts(response);
-        // } else{
-
-        // }
-
-        setProducts(data);
-
-
-
-      }, []);
     
 
+    const [showDetails, setShowDetails] = useState(false);
+    
+    const [selectedProduct, setSelectedProduct] = useState(null);
+
+
+    const handleExpandDetails = (product) => {
+        
+        setSelectedProduct(product)
+        setShowDetails(!showDetails);
+    };
 
 
 
 
 
-    return(
+    /*Logica de la peticion */
+    useEffect(() => {
 
-        <>
-            <Offcanvas show={show} onHide={handleClose} placement='end'>
-                <Offcanvas.Header  className='rounded-bottom shadow-sm' style={{backgroundColor: '#FEC151',border:'none',}} closeButton>
-                    <Offcanvas.Title className='my-2 fw-bold' >Confirmación Pedido</Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                {products.map(product => (
+        const fetchData = async () =>{
+            try {
+                const response = await peticiones.GetAllProducts();
+                setProducts(response);
+            } catch (error) {
+                console.log(error)
+            }
+        } 
 
-                    <CardProduct product={product} />
-                    
-                ))}
-                    <Button id='button-pagar' className='rounded-pill text-black fw-bold p-3 w-100 my-2' style={{backgroundColor: '#FEC151', border: 'none' }}>Confirmar y pagar</Button>
-                </Offcanvas.Body>
-            </Offcanvas>
-        </>
+        fetchData();
         
 
+      }, []);
+
+
+    return (
+
+        < >
+            
+            <h1 className='m-5 fw-bold '>Nuestro Menú</h1>
+
+            
+            <Container className='d-flex justify-content-end mw-100'>
+                <Button className=' rounded-pill p-3 text-black fw-semibold w-100' style={{border:'none',backgroundColor: '#FEC151',width: '100%'}}>Agregar Nuevo Producto</Button>
+            </Container>
+                
+                
+            <Row className="m-5 justify-content-center">
+                <Col md={12}>
+                
+                    <Row className='mx-5 justify-content-center'>
+                
+                        {products.map(product => (
+                            
+                            <Col className='mb-4' key={product.id} md={4} >
+                            <CardProduct product={product} handleDetails={handleExpandDetails}/>
+                            </Col>
+                            
+                        ))}
+                                
+                    </Row>
+                </Col>
+
+            
+            </Row>
+
+            {showDetails && <DetalleProducto show={showDetails} handleDetails={handleExpandDetails} product={selectedProduct}/>}
+                    
+                    
+                    
+                    
+                    
+                    
+        
+        </>
     );
+
+
+
+
+
+
+
+
 
 }
 
-export default ConfirmacionPedido
+
+
+
+
+export default HomeView;

@@ -1,160 +1,141 @@
-import React from 'react'
+const BaseUrl = 'http://localhost:3001';
 
-export const peticiones =  () => {
-    
-    const BaseUrl ='http:';
-    
-    const GetAllProducts = async () =>{
-        await fetch(BaseUrl+"/products")
-        .then((response) => {
-            return response
-        }).catch((error) => {
-            return error
-        });
+export const peticiones = {
+  GetAllProducts: async () => {
+    try {
+      const response = await fetch(`${BaseUrl}/products`);
+      return response;
+    } catch (error) {
+      return error;
     }
+  },
 
-    const  GetProductsByPage = async () =>{
-        await fetch(BaseUrl+"/products")
-        .then((response) => {
-            return response
-        }).catch((error) => {
-            console.log('Hubo un problema con la petición :' + error.message);
-        });
+  GetProductsByPage: async () => {
+    try {
+      const response = await fetch(`${BaseUrl}/products`);
+      return response;
+    } catch (error) {
+      console.log('Hubo un problema con la petición:', error.message);
     }
+  },
 
-    const  GetProductById = async ( id)=> {
-       await fetch(BaseUrl+"/products")
-       .then((response) => {
-           return response
-       }).catch((error) => {
-           console.log('Hubo un problema con la petición :' + error.message);
-       });
-   }
+  GetProductById: async (id) => {
+    try {
+      const response = await fetch(`${BaseUrl}/products/${id}`);
+      return response;
+    } catch (error) {
+      console.log('Hubo un problema con la petición:', error.message);
+    }
+  },
 
-    const  PostProduct = async ( form) =>{
-    await fetch(BaseUrl+"/products", {
+  PostProduct: async (form) => {
+    try {
+      const response = await fetch(`${BaseUrl}/products`, {
         method: 'POST',
         body: JSON.stringify(form),
         headers: {
-        'Content-type': "application/json; charset=UTF-8"
-        }})
-        .then((response) => {
-            return response
-        }).catch((error) => {
-            console.log('Hubo un problema con la petición :' + error.message);
-        });
-}
-
-
-    const  UpdateProduct = async( form,  id) =>   {
-        await fetch(BaseUrl+"/products", {
-            method: 'PUT',
-            body: JSON.stringify(form),
-            headers: {
-            'Content-type': "application/json; charset=UTF-8"
-            }})
-        .then((response) => {
-            return response
-        }).catch((error) => {
-            console.log('Hubo un problema con la petición :' + error.message);
-        });
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log('Hubo un problema con la petición:', error.message);
     }
-    const  RemoveProduct = async (id) =>   {
-        await fetch(BaseUrl+"/products/"+id,{
-            method: "DELETE"
-            })
-        .then((response) => {
-            return response
-        }).catch((error) => {
-            console.log('Hubo un problema con la petición :' + error.message);
-        });
+  },
+
+  UpdateProduct: async (form, id) => {
+    try {
+      const response = await fetch(`${BaseUrl}/products/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(form),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log('Hubo un problema con la petición:', error.message);
     }
+  },
 
-    const  GetProductsByCategory = async(id)   =>  {
-        await fetch(BaseUrl+"/categories/"+id+"products")
-        .then((response) => {
-            return response
-        }).catch((error) => {
-            console.log('Hubo un problema con la petición :' + error.message);
-        });
+  RemoveProduct: async (id) => {
+    try {
+      const response = await fetch(`${BaseUrl}/products/${id}`, {
+        method: 'DELETE',
+      });
+      return response;
+    } catch (error) {
+      console.log('Hubo un problema con la petición:', error.message);
     }
+  },
 
-
-
-    const  GetAllCategories = async () =>    {
-        await fetch(BaseUrl+"/categories")
-        .then((response) => {
-            return response
-        }).catch((error) => {
-            console.log('Hubo un problema con la petición :' + error.message);
-        });
+  GetProductsByCategory: async (id) => {
+    try {
+      const response = await fetch(`${BaseUrl}/categories/${id}/products`);
+      return response;
+    } catch (error) {
+      console.log('Hubo un problema con la petición:', error.message);
     }
+  },
 
-
-    const  GetCategoryById = async ( id)   =>  {
-        await fetch(BaseUrl+"/categories/"+id)
-        .then((response) => {
-            return response
-        }).catch((error) => {
-            console.log('Hubo un problema con la petición :' + error.message);
-        });
+  GetAllCategories: async () => {
+    try {
+      const response = await fetch(`${BaseUrl}/categories`);
+      return response;
+    } catch (error) {
+      console.log('Hubo un problema con la petición:', error.message);
     }
+  },
 
-    const  PostCategory = async (form) => {
-        await fetch(BaseUrl+"/categories", {
-            method: 'POST',
-            body: JSON.stringify(form),
-            headers: {
-            'Content-type': "application/json; charset=UTF-8"
-            }})
-        .then((response) => {
-            return response
-        }).catch((error) => {
-            console.log('Hubo un problema con la petición :' + error.message);
-        });
+  GetCategoryById: async (id) => {
+    try {
+      const response = await fetch(`${BaseUrl}/categories/${id}`);
+      return response;
+    } catch (error) {
+      console.log('Hubo un problema con la petición:', error.message);
     }
+  },
 
-
-    const  UpdateCategory = async (form, id) => {
-        await fetch(BaseUrl+"/categories/"+id
-        , {
-            method: 'PUT',
-            body: JSON.stringify(form),
-            headers: {
-            'Content-type': "application/json; charset=UTF-8"
-            }})
-        .then((response) => {
-            return response
-        }).catch((error) => {
-            console.log('Hubo un problema con la petición :' + error.message);
-        });
+  PostCategory: async (form) => {
+    try {
+      const response = await fetch(`${BaseUrl}/categories`, {
+        method: 'POST',
+        body: JSON.stringify(form),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log('Hubo un problema con la petición:', error.message);
     }
+  },
 
-
-    const  RemoveCategory= async (id) =>{
-        await fetch(BaseUrl+"/categories/"+id,{
-            method: "DELETE"
-            })
-        .then((response) => {
-            return response
-        }).catch((error) => {
-            console.log('Hubo un problema con la petición :' + error.message);
-        });
+  UpdateCategory: async (form, id) => {
+    try {
+      const response = await fetch(`${BaseUrl}/categories/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(form),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log('Hubo un problema con la petición:', error.message);
     }
+  },
 
+  RemoveCategory: async (id) => {
+    try {
+      const response = await fetch(`${BaseUrl}/categories/${id}`, {
+        method: 'DELETE',
+      });
+      return response;
+    } catch (error) {
+      console.log('Hubo un problema con la petición:', error.message);
+    }
+  },
+};
 
-  return (
-    GetAllProducts,
-    GetProductsByPage,
-    GetProductById,
-    PostProduct,
-    UpdateProduct,
-    RemoveProduct,
-    GetProductsByCategory,
-    GetAllCategories,
-    GetCategoryById,
-    PostCategory,
-    UpdateCategory,
-    RemoveCategory)
-}
 export default peticiones;
