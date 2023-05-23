@@ -12,6 +12,29 @@ export async function userFindByCorreoAndPass(usuario, pass){
     });
 }
 
+export async function userCreate(_userEmail,_fullName,_address,_phoneNumber,_password){
+  console.log(BaseUrl+"/customers");
+  const customerData = {
+    userEmail:  _userEmail,
+    fullName: _fullName ,
+    address: _address ,
+    phoneNumber: _phoneNumber,
+    password: _password 
+  };
+  return await fetch(BaseUrl+"/customers",
+  {
+    method: 'POST',
+    headers: {
+    'Content-Type': 'application/json'
+  },
+    body: JSON.stringify(customerData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    return data;
+  });
+}
+
  export const UsuarioPeticiones = () => {
   return  (userFindByCorreoAndPass)
 }

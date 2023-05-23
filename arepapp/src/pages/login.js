@@ -53,14 +53,9 @@ function Login (){
       <Card.Header style={{ paddingTop: '5%',backgroundColor: '#FEC151'}}>
       <Card.Title >Login</Card.Title> 
       </Card.Header>
-    
-      {
-          (task.status)? <Alert key='Sesion' variant='success'>
-          SesionActiva </Alert> : <Alert key='noSesion' variant='danger'>
-          Sesion Inactiva </Alert>
-        }
+      
       <InputGroup className="mb-3"  
-      style={{ width: '70%', marginLeft: '10%', }}>
+      style={{ marginTop:"5%", width: '70%', marginLeft: '10%', }}>
         <InputGroup.Text id="inputGroup-correo-usuario">
           Correo @
         </InputGroup.Text>
@@ -91,7 +86,7 @@ function Login (){
 
         <Button id= "card-registrarse-boton" 
         style={{ width: '70%', marginLeft: '10%',marginBottom:'5%' }}
-        variant="primary" type="submit" onClick={() => loginUsuario()}>Iniciar Sesion</Button>
+        variant="warning" type="submit" onClick={() => loginUsuario()}>Iniciar Sesion</Button>
         {
           (alerta)? <Alert key='danger' variant='danger'>
           Error con las credenciales </Alert> : ''
