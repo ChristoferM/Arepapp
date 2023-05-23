@@ -185,5 +185,31 @@
         "quantity": 3,
         "priceOrd": 33600
       }
+    ],
+    "usuario":[
+      {  
+        "correo":"maria@web.com",
+        "nombreCompleto":"Maria del mar",
+        "direccion":"calle 15 # 785685",
+        "pass":"123456"
+      },
+      {  
+        "correo":"fabio@web.com",
+        "nombreCompleto":"Fabio octavio",
+        "direccion":"av 8 # 112 3",
+        "pass":"123456"
+      },
+      {  
+        "correo":"sergio@web.com",
+        "nombreCompleto":"Sergio Naranjo",
+        "direccion":"cra 45 # 12 123",
+        "pass":"123456"
+      },
+      {  
+        "correo":"mario@web.com",
+        "nombreCompleto":"mario palacio",
+        "direccion":"calle 39 # 123",
+        "pass":"123456"
+      }
     ]
   }

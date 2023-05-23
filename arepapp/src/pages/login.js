@@ -4,6 +4,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
+import {userFindByCorreoAndPass} from '../api/usuario/usuarioPeticiones'
 
 function Login (){
   const [nombre, setNombre] = useState('');
@@ -15,6 +16,21 @@ function Login (){
   
 
   function loginUsuario(){
+    console.log('INICIANDO SESION');
+    userFindByCorreoAndPass(correo, contrasenna)
+    .then(data => {
+      if( Object.keys(data).length === 0){
+        setAlerta(true);
+        console.log('Usuario No registrado');
+      }else{
+        console.log(data);
+      }
+    })
+    .catch(error => {
+      // Manejo de errores
+      console.error(error);
+    });
+    
 
   }
   return (
@@ -54,7 +70,11 @@ function Login (){
 
 
         <Button id= "card-registrarse-boton" 
-        variant="primary" type="submit" onClick={loginUsuario}>Iniciar Sesion</Button>
+        variant="primary" type="submit" onClick={() => loginUsuario()}>Iniciar Sesion</Button>
+        {
+          (alerta)? <Alert key='danger' variant='danger'>
+          Error con las credenciales </Alert> : ''
+        }
       </Card>
 
       

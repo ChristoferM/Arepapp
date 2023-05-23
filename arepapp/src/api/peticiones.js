@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const peticiones =  () => {
     
     const BaseUrl ='http:';
