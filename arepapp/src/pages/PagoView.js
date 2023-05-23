@@ -11,60 +11,60 @@ import CardProduct from '../component/CardProduct'
 const data=[
     {
         id: 1,
-        titulo: "Life Lessons with Katie Zaferes",
-        descripcion: "I will share with you what I call \"Positively Impactful Moments of Disappointment.\" Throughout my career, many of my highest moments only came after setbacks and losses. But learning from those difficult moments is what gave me the ability to rise above them and reach my goals.",
-        precio: 136,
-        img: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
+        name: "Life Lessons with Katie Zaferes",
+        description: "I will share with you what I call \"Positively Impactful Moments of Disappointment.\" Throughout my career, many of my highest moments only came after setbacks and losses. But learning from those difficult moments is what gave me the ability to rise above them and reach my goals.",
+        price: 136,
+        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
     },
     {
         id: 2,
-        titulo: "Learn Wedding Photography",
-        descripcion: "Interested in becoming a wedding photographer? For beginner and experienced photographers alike, join us in learning techniques required to leave the happy couple with memories that'll last a lifetime.",
-        precio: 125,
-        img: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
+        name: "Learn Wedding Photography",
+        description: "Interested in becoming a wedding photographer? For beginner and experienced photographers alike, join us in learning techniques required to leave the happy couple with memories that'll last a lifetime.",
+        price: 125,
+        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
 
     },
     {
         id: 3,
-        titulo: "Group Mountain Biking",
-        descripcion: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        precio: 50,
-        img: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
+        name: "Group Mountain Biking",
+        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
+        price: 50,
+        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
     },
     {
         id: 3,
-        titulo: "Group Mountain Biking",
-        descripcion: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        precio: 50,
-        img: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
+        name: "Group Mountain Biking",
+        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
+        price: 50,
+        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
     },
     {
         id: 3,
-        titulo: "Group Mountain Biking",
-        descripcion: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        precio: 50,
-        img: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
+        name: "Group Mountain Biking",
+        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
+        price: 50,
+        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
     },
     {
         id: 3,
-        titulo: "Group Mountain Biking",
-        descripcion: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        precio: 50,
-        img: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
+        name: "Group Mountain Biking",
+        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
+        price: 50,
+        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
     },
     {
         id: 3,
-        titulo: "Group Mountain Biking",
-        descripcion: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        precio: 50,
-        img: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
+        name: "Group Mountain Biking",
+        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
+        price: 50,
+        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
     },
     {
         id: 3,
-        titulo: "Group Mountain Biking",
-        descripcion: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        precio: 50,
-        img: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
+        name: "Group Mountain Biking",
+        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
+        price: 50,
+        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
     }
 ]
 

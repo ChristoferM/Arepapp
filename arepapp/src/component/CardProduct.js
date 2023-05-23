@@ -3,7 +3,7 @@ import {Button,ButtonGroup,Image,Offcanvas,Col,Raw,Card } from 'react-bootstrap'
 
 
 
-function ConfirmationCardProduct({product, handleDetails}){
+function CardProduct({product, handleDetails}){
 
     const handleDetailsClick = () => {
         handleDetails(product);
@@ -18,13 +18,13 @@ function ConfirmationCardProduct({product, handleDetails}){
             <Card className='my-3 rounded-4' >
                 <Card.Body className='d-flex align-items-center'>
                     <div className='w-25 me-3' style={{ display: 'flex'}}>
-                        <Image className='h-50 w-100 ' src={product.img} alt={`Imgen de ${product.titulo}`} onClick={handleDetailsClick} rounded/>
+                        <Image className='h-50 w-100 ' src={product.imgUrl} alt={`Imagen de ${product.name}`} onClick={handleDetailsClick} rounded/>
                     </div>
                     <div>
                     
-                        <Card.Title>{product.titulo}</Card.Title>
-                        <Card.Text> $ {product.precio} </Card.Text>
-                        <Card.Text className='fs-6 text-secondary fw-light'> {product.descripcion.length > 35 ? product.descripcion.substring(0,35) + '...' : product.descripcion }</Card.Text>
+                        <Card.Title>{product.name}</Card.Title>
+                        <Card.Text> $ {product.price} </Card.Text>
+                        <Card.Text className='fs-6 text-secondary fw-light'> {product.description.length > 35 ? product.description.substring(0, 35) + '...' : product.description}</Card.Text>
                         <ButtonGroup className='align-items-center'>
                             <Button  className='text-black' style={{backgroundColor: '#FEC151',border:'none'}}>+</Button>
                             <span className="mx-3 fw-bolder" style={{ display: 'inline-block', verticalAlign: 'middle' }}>0</span>
@@ -48,4 +48,4 @@ function ConfirmationCardProduct({product, handleDetails}){
 
 
 
-export default ConfirmationCardProduct;
+export default CardProduct;

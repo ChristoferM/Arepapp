@@ -83,9 +83,9 @@ function App() {
         <Route path="/" element={<HomeView/>} />
       </Routes>
     </div>  
+    {showConfirmacion && <ConfirmacionPedido show={showConfirmacion} handleClose={handleConfirmacion}  ConfirmacionPedido/>}
     </BrowserRouter>
 
-    {showConfirmacion && <ConfirmacionPedido show={showConfirmacion} handleClose={handleConfirmacion}  ConfirmacionPedido/>}
     </>
     
   );
