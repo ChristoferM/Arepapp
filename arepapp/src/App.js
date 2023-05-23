@@ -14,6 +14,9 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Button } from 'react-bootstrap';
+
+import { Provider } from 'react-redux';
+import store from './store'; // min 26:00
 function App() {
 
 
@@ -24,7 +27,7 @@ function App() {
 
 
   return (
-    <>
+    <Provider store={store}>
     <BrowserRouter>
      <Navbar bg="light" expand="lg">
       <Container>
@@ -64,7 +67,7 @@ function App() {
     </Button>
 
     {showConfirmacion && <ConfirmacionPedido show={showConfirmacion} handleClose={handleConfirmacion}  ConfirmacionPedido/>}
-    </>
+    </Provider>
     
   );
 }
