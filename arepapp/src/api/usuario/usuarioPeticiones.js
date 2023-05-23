@@ -3,9 +3,9 @@
 const BaseUrl = 'http://localhost:3001'
 
 export async function userFindByCorreoAndPass(usuario, pass){
-    console.log(BaseUrl+"/usuario?correo="+usuario+"&pass="+pass);
+    console.log(BaseUrl+"/customers?userEmail="+usuario+"&password="+pass);
     
-    return await fetch(BaseUrl+"/usuario?correo="+usuario+"&pass="+pass)
+    return await fetch(BaseUrl+"/customers?userEmail="+usuario+"&password="+pass)
     .then(response => response.json())
     .then(data => {
       return data;

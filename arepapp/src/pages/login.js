@@ -47,17 +47,20 @@ function Login (){
   }
   return (
     <>
-      <Card style={{ width: '80%', marginLeft: '10%', textAlign: 'center',
-    paddingTop: '5%'}}
+      <Card style={{ width: '75%', marginLeft: '10%', textAlign: 'center',
+      marginBottom:'10%'}}
     id="card-registrarse">
-
-    <Card.Title>Login</Card.Title>
+      <Card.Header style={{ paddingTop: '5%',backgroundColor: '#FEC151'}}>
+      <Card.Title >Login</Card.Title> 
+      </Card.Header>
+    
       {
           (task.status)? <Alert key='Sesion' variant='success'>
           SesionActiva </Alert> : <Alert key='noSesion' variant='danger'>
           Sesion Inactiva </Alert>
         }
-      <InputGroup className="mb-3">
+      <InputGroup className="mb-3"  
+      style={{ width: '70%', marginLeft: '10%', }}>
         <InputGroup.Text id="inputGroup-correo-usuario">
           Correo @
         </InputGroup.Text>
@@ -70,7 +73,8 @@ function Login (){
         />
       </InputGroup>
 
-      <InputGroup className="mb-3">
+      <InputGroup className="mb-3"
+      style={{ width: '70%', marginLeft: '10%', }}>
         <InputGroup.Text id="inputGroup-pass-usuario">
           contraseña
         </InputGroup.Text>
@@ -86,6 +90,7 @@ function Login (){
 
 
         <Button id= "card-registrarse-boton" 
+        style={{ width: '70%', marginLeft: '10%',marginBottom:'5%' }}
         variant="primary" type="submit" onClick={() => loginUsuario()}>Iniciar Sesion</Button>
         {
           (alerta)? <Alert key='danger' variant='danger'>
