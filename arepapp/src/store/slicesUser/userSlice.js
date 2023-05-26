@@ -22,9 +22,10 @@ export const userSlice = createSlice(
             }
         }
     }
-    );
+);
+
 export const {setUserLoginSesion,setUserLogoutSesion} = userSlice.actions;
-export const isSesion = (state) => state.status;
-export const isSesionData = (state) => state;
+export const isSesion = (state) => state.usuarioSesion.status;
+export const isSesionData = (state) => state.usuarioSesion.dataUser;
 export default userSlice.reducer;
 

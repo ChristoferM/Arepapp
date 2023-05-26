@@ -36,7 +36,7 @@ function App() {
     dispatch(setUserLogoutSesion({}));
   }
   
-
+  console.log(task.dataUser);
   return (
     <>
     <BrowserRouter>
@@ -53,9 +53,15 @@ function App() {
 
               {
                 (task.status) ?
-                <Nav.Link href="#">
-                 <Link onClick={()=>{CerrarSeion()}}>cerrar sesion </Link>
-                 </Nav.Link> 
+                <div>
+                    <div>
+                      <p>Nombre: {task.dataUser.data[0].fullName}</p>
+                    </div>
+
+                  <Nav.Link href="#">
+                  <Link onClick={()=>{CerrarSeion()}}>cerrar sesion </Link>
+                  </Nav.Link> 
+                </div>
                  : <div>
                  <NavDropdown.Item >            
                    <Nav.Link href="#link">
