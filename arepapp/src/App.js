@@ -37,7 +37,6 @@ function App() {
   }
   
 
-
   return (
     <>
     <BrowserRouter>
@@ -51,28 +50,30 @@ function App() {
           <Nav className="ms-auto">
 
             <NavDropdown  title={<img src={botonUsuario} alt="Usuario" width="45" height="45" />} id="nav-usuario-dropdown">
-              <div>
-                <NavDropdown.Item >            
-                  <Nav.Link href="#link">
-                    <Link to="/login" >Login </Link>
-                  </Nav.Link>
-                </NavDropdown.Item>
-                <NavDropdown.Item >            
-                  <Nav.Link href="#link">
-                    <Link to="/registrarse" >Registrarse </Link>
-                  </Nav.Link>
-                </NavDropdown.Item>
-              </div>  
+
+              {
+                (task.status) ?
+                <Nav.Link href="#">
+                 <Link onClick={()=>{CerrarSeion()}}>cerrar sesion </Link>
+                 </Nav.Link> 
+                 : <div>
+                 <NavDropdown.Item >            
+                   <Nav.Link href="#link">
+                     <Link to="/login" >Login </Link>
+                   </Nav.Link>
+                 </NavDropdown.Item>
+                 <NavDropdown.Item >            
+                   <Nav.Link href="#link">
+                     <Link to="/registrarse" >Registrarse </Link>
+                   </Nav.Link>
+                 </NavDropdown.Item>
+               </div>
+              }  
             </NavDropdown>
             <Nav.Link>
               <img src={botonCarrito} alt="Pago" width="45" height="45" onClick={handleConfirmacion}/>
             </Nav.Link>
-           {
-             (task.status)?
-             <Nav.Link href="#">
-              <Link onClick={()=>{CerrarSeion()}}>cerrar sesion </Link>
-              </Nav.Link>:''
-           }
+
           </Nav>
         </Navbar.Collapse>
       </Container>

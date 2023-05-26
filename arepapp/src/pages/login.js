@@ -17,8 +17,8 @@ function Login (){
   const [alerta, setAlerta] = useState(false);
 
   const task =  useSelector(state => state.usuarioSesion);
-  const InciarSesion = () =>{
-    dispatch(setUserLoginSesion({status:true,dataUser:{correo,contrasenna}}));
+  const InciarSesion = (data) =>{
+    dispatch(setUserLoginSesion({status:true,dataUser:{data}}));
   }
   // función quedebe migrarse al componente que tendrá el cierre de sesión
   const CerrarSeion = () =>{
@@ -35,7 +35,7 @@ function Login (){
         CerrarSeion();
       }else{
         setAlerta(false);
-        InciarSesion();
+        InciarSesion(data);
       }
     })
     .catch(error => {

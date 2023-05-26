@@ -8,6 +8,7 @@ export async function userFindByCorreoAndPass(usuario, pass){
     return await fetch(BaseUrl+"/customers?userEmail="+usuario+"&password="+pass)
     .then(response => response.json())
     .then(data => {
+      // console.log(data);
       return data;
     });
 }

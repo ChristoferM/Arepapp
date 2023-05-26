@@ -19,7 +19,7 @@ function DetalleProducto({show, handleDetails, product}){
     return (
         <Modal show={show} onHide={handleDetails} >
             
-
+        <Modal.Header closeButton />
             <Modal.Body>
                 <Image  className='mb-2 w-100' src={product.imgUrl} alt={`Foto de ${product.name}`} rounded/>
 
