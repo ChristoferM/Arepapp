@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {userCreate} from '../api/usuario/usuarioPeticiones';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Card from 'react-bootstrap/Card';
@@ -8,27 +9,48 @@ import Alert from 'react-bootstrap/Alert';
 const Registro = () => {
   const [nombre, setNombre] = useState('');
   const [correo, setCorreo] = useState('');
+  const [direccion, setDireccion] = useState('');
+  const [numero, setNumero] = useState('');
   const [contrasenna, setContrasenna] = useState('');
   const [confirmaciConcontrasenna, setConfirmaciConcontrasenna] = useState('');
   const [alerta, setAlerta] = useState(false)
+  const [Mensaje, setMensakje] = useState('');
 
+  
   function registrarUsuario(){
     if(contrasenna !== confirmaciConcontrasenna){
       setAlerta(true);
+      setMensakje('La constraña no coincide');
     }else{
       setAlerta(false);
+      userCreate(correo,nombre,direccion,numero,contrasenna)
+        .then(data => {
+          if( Object.keys(data).length === 0){
+            console.log('Usuario No creado');
+          }else{
+            setMensakje('usuarioRegistrado');
+            
+          }
+        })
+        .catch(error => {
+          // Manejo de errores
+          console.error(error);
+        });
     }
   }
   
   return (
     <>
-      <Card style={{ width: '80%', marginLeft: '10%', textAlign: 'center',
-    paddingTop: '5%'}}
+      <Card style={{ width: '75%', marginLeft: '10%', textAlign: 'center',
+      marginBottom:'10%'}}
     id="card-registrarse">
+      <Card.Header style={{ paddingTop: '5%',backgroundColor: '#FEC151'}}>
+        <Card.Title >Registrate</Card.Title> 
+      </Card.Header>
+    
 
-    <Card.Title>Registrate</Card.Title>
-
-     <InputGroup className="mb-3">
+     <InputGroup className="mb-3"
+     style={{  marginTop:"5%", width: '70%', marginLeft: '10%', }}>
         <InputGroup.Text id="inputGroup-nombre">
           Nombre
         </InputGroup.Text>
@@ -40,8 +62,36 @@ const Registro = () => {
           aria-describedby="inputGroup-nombre"
         />
       </InputGroup>
+      <InputGroup className="mb-3"
+      style={{ width: '70%', marginLeft: '10%', }}>
+        <InputGroup.Text id="inputGroup-direccion">
+          Direccion
+        </InputGroup.Text>
+        <Form.Control
+          value = {direccion}
+          onChange={(e) => setDireccion(e.target.value)} 
+          aria-label="Default"
+          placeholder="Direccion"
+          aria-describedby="inputGroup-direccion"
+        />
+      </InputGroup>
+      <InputGroup className="mb-3"
+      style={{ width: '70%', marginLeft: '10%', }}>
+        <InputGroup.Text id="inputGroup-numero">
+          Número
+        </InputGroup.Text>
+        <Form.Control
+          value = {numero}
+          onChange={(e) => setNumero(e.target.value)} 
+          aria-label="Default"
+          placeholder="numero"
+          aria-describedby="inputGroup-numero"
+        />
+      </InputGroup>
 
-      <InputGroup className="mb-3">
+
+      <InputGroup className="mb-3"
+      style={{ width: '70%', marginLeft: '10%', }}>
         <InputGroup.Text id="inputGroup-correo-usuario">
           Correo @
         </InputGroup.Text>
@@ -54,7 +104,8 @@ const Registro = () => {
         />
       </InputGroup>
 
-      <InputGroup className="mb-3">
+      <InputGroup className="mb-3"
+      style={{ width: '70%', marginLeft: '10%', }}>
         <InputGroup.Text id="inputGroup-pass-usuario">
           contraseña
         </InputGroup.Text>
@@ -67,7 +118,8 @@ const Registro = () => {
           aria-describedby="inputGroup-pass-usuario"
         />
       </InputGroup> 
-      <InputGroup className="mb-3">
+      <InputGroup className="mb-3"
+      style={{ width: '70%', marginLeft: '10%', }}>
         <InputGroup.Text id="inputGroup-pass-usuario">
           contraseña
         </InputGroup.Text>
@@ -82,10 +134,11 @@ const Registro = () => {
       </InputGroup> 
       {
         (alerta)? <Alert key='danger' variant='danger'>
-          La constraña no coincide </Alert> : ''
+          {Mensaje} </Alert> : ''
         }
         <Button id= "card-registrarse-boton" 
-        variant="primary" type="submit" onClick={registrarUsuario}>Registrarse</Button>
+        style={{ width: '70%', marginLeft: '10%',marginBottom:'5%' }}
+        variant="warning" type="submit" onClick={registrarUsuario}>Registrarse</Button>
       </Card>
   </>
   )

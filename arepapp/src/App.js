@@ -11,32 +11,31 @@ import logo from './assets/icons/logo.svg'
 
 import Registro from './pages/registro';
 import Login from './pages/login';
-import DetalleProducto from './component/DetalleProducto';
 import AdminView from './pages/AdminView';
 import HomeView from './pages/HomeView'
 import PagoView from './pages/PagoView'
 import ConfirmacionPedido from './component/ConfirmacionPedido';
-
-import AuthJWT from './helper/authJWT';
+import { useSelector,useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Button } from 'react-bootstrap';
-
-
-
-
-
-
+import {setUserLogoutSesion } from './store/slicesUser/userSlice';
 
 function App() {
 
-
   const [showConfirmacion, setShowConfimacion] = React.useState(false);
-
   const handleConfirmacion = () => setShowConfimacion(!showConfirmacion);
 
+  const task = useSelector(state => state.usuarioSesion);
+  const dispatch = useDispatch();
+  
+  // función quedebe migrarse al componente que tendrá el cierre de sesión
+  const CerrarSeion = () =>{
+    dispatch(setUserLogoutSesion({}));
+  }
+  
 
 
   return (
@@ -68,7 +67,12 @@ function App() {
             <Nav.Link>
               <img src={botonCarrito} alt="Pago" width="45" height="45" onClick={handleConfirmacion}/>
             </Nav.Link>
-
+           {
+             (task.status)?
+             <Nav.Link href="#">
+              <Link onClick={()=>{CerrarSeion()}}>cerrar sesion </Link>
+              </Nav.Link>:''
+           }
           </Nav>
         </Navbar.Collapse>
       </Container>
