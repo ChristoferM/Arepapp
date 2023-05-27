@@ -1,113 +1,81 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector} from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button} from 'react-bootstrap';
 
-import CardProduct from '../component/CardProduct'
-
-
-
+import ProductCardConfirmation from '../component/ProductCardConfirmation';
+import CompraFinalizada from '../component/CompraFinalizada';
 
 
-const data=[
-    {
-        id: 1,
-        name: "Life Lessons with Katie Zaferes",
-        description: "I will share with you what I call \"Positively Impactful Moments of Disappointment.\" Throughout my career, many of my highest moments only came after setbacks and losses. But learning from those difficult moments is what gave me the ability to rise above them and reach my goals.",
-        price: 136,
-        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
-    },
-    {
-        id: 2,
-        name: "Learn Wedding Photography",
-        description: "Interested in becoming a wedding photographer? For beginner and experienced photographers alike, join us in learning techniques required to leave the happy couple with memories that'll last a lifetime.",
-        price: 125,
-        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
 
-    },
-    {
-        id: 3,
-        name: "Group Mountain Biking",
-        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        price: 50,
-        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
-    },
-    {
-        id: 3,
-        name: "Group Mountain Biking",
-        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        price: 50,
-        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
-    },
-    {
-        id: 3,
-        name: "Group Mountain Biking",
-        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        price: 50,
-        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
-    },
-    {
-        id: 3,
-        name: "Group Mountain Biking",
-        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        price: 50,
-        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
-    },
-    {
-        id: 3,
-        name: "Group Mountain Biking",
-        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        price: 50,
-        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
-    },
-    {
-        id: 3,
-        name: "Group Mountain Biking",
-        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        price: 50,
-        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
-    }
-]
+
+
+
 
 function PagoView() {
 
 
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [showCompraFinalizada, setShowCompraFinalizada] = useState(false);
+
+    const task = useSelector(state => state.usuarioSesion);
+    const orderProducts = useSelector(state => state.shoppingCart);
+
+  
+    const navigate = useNavigate();
+
+
+    const redirectToHome = () => {
+        navigate('/');
+    };
+
+    const [formData, setFormData] = useState({
+        email: '',
+        fullName: '',
+        address: '',
+        phoneNumber: '',
+        notes: ''
+    });
+
+    const handleChange = (e) => {
+        setFormData({
+        ...formData,
+        [e.target.name]: e.target.value
+        });
+    };
+
+    const handleExpandCompraFinalizada = () => {
+
+        if (orderProducts.length !== 0) {
+            setShowCompraFinalizada(!showCompraFinalizada);
+        }
+
+    };
+
+
 
     useEffect(() => {
 
-        // const response = GetAllProducts();
+        // aqui la logica que se encargar de sacar los productos del carrito que es un estado en reduxs
+        setProducts(orderProducts);
+        setTotalPrice(calculateTotal(orderProducts))
+
+    },[orderProducts]);
+
+
+
+    const calculateTotal = (products) => {
+
+        let total = 0
+        products.forEach((product) => {
+
+            total += product.cantidad * product.productData.price
+        })
         
-        // if (response !== Error){
-
-        //     setProducts(response);
-        // } else{
-
-        // }
-
-        setProducts(data);
-
-
-
-      }, []);
-
-
-
-
-
-  const [formData, setFormData] = useState({
-    email: '',
-    fullName: '',
-    address: '',
-    phoneNumber: '',
-    notes: ''
-  });
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+        return total;
+    }
 
 
     // Lógica de subida de la orden y los detalles de la orden
@@ -127,8 +95,10 @@ function PagoView() {
                                 type="email"
                                 placeholder="name@example.com"
                                 name="email"
-                                value={formData.email}
+                                value={(task.status) ? task.dataUser.data[0].userEmail : formData.email}
                                 onChange={handleChange}
+
+                                disabled={(task.status) ? true : false}
                             />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
@@ -136,8 +106,10 @@ function PagoView() {
                             <Form.Control
                                 type="text"
                                 name="fullName"
-                                value={formData.fullName}
+                                value={ (task.status) ? task.dataUser.data[0].fullName : formData.fullName}
                                 onChange={handleChange}
+
+                                disabled={(task.status) ? true : false}
                             />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
@@ -145,8 +117,10 @@ function PagoView() {
                             <Form.Control
                                 type="text"
                                 name="address"
-                                value={formData.address}
+                                value={(task.status) ? task.dataUser.data[0].address : formData.address}
                                 onChange={handleChange}
+
+                                disabled={(task.status) ? true : false}
                             />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
@@ -154,8 +128,9 @@ function PagoView() {
                             <Form.Control
                                 type="text"
                                 name="phoneNumber"
-                                value={formData.phoneNumber}
+                                value={(task.status) ? task.dataUser.data[0].phoneNumber : formData.phoneNumber}
                                 onChange={handleChange}
+                                disabled={(task.status) ? true : false}
                             />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
@@ -171,27 +146,33 @@ function PagoView() {
                         </aside>
                     </Col>
                     <Col xs={12} md={8} className="my-5">
-                        <h1 className="fw-bold text-center mb-">Detalle del pedido</h1>
+                        <h1 className="fw-bold text-center mb-">Resumen del pedido</h1>
                         <aside className="p-4 border rounded-4 shadow-lg " style={{ backgroundColor: '#FEC151', border: 'none',maxHeight: '33rem', overflowY: 'auto' }}>
                             <div className="h-100 overflow-auto">
                                 {products.map(product => (
 
-                                    <CardProduct product={product} />
+                                    <ProductCardConfirmation product={product} key={product.productData.id}/>
                                     
                                 ))}
                             </div>    
                         </aside>
                     </Col>
                 </Row>
+                <Row>
+                    <h2 className='m-4'>Precio Total: ${totalPrice}</h2>
+                                    
+                
+                </Row>
                 <Row >
                     <Col md={10}>
-                        <Button id='button-finalizar' className='rounded-pill text-black fw-bold p-3 w-100 my-2' style={{backgroundColor: '#FEC151', border: 'none' }}>Pagar</Button>
+                        <Button id='button-finalizar' onClick={handleExpandCompraFinalizada} className='rounded-pill text-black fw-bold p-3 w-100 my-2' style={{backgroundColor: '#FEC151', border: 'none' }}>Pagar</Button>
                     </Col>
                     <Col md={2}>
-                        <Button id='button-cancelar' className='rounded-pill text-black fw-bold p-3 w-100 my-2' style={{backgroundColor: '#d99843', border: 'none' }}>Cancelar</Button>
+                        <Button id='button-cancelar' onClick={redirectToHome} className='rounded-pill text-black fw-bold p-3 w-100 my-2' style={{backgroundColor: '#d99843', border: 'none' }}>Cancelar</Button>
                     </Col> 
                 </Row>
           </Container>
+          {showCompraFinalizada && <CompraFinalizada show={showCompraFinalizada} handleDelete={handleExpandCompraFinalizada} />}
         </>
       );
     }

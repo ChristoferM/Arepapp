@@ -1,126 +1,61 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeOrder } from '../store/slicesOrders/ordersSlice';
+import { Button, Offcanvas, Card } from 'react-bootstrap';
+import ProductCardConfirmation from './ProductCardConfirmation';
 
+function ConfirmacionPedido({ show, handleClose }) {
+  const [showOverlay, setShowOverlay] = useState(false);
 
-import {Button,Offcanvas} from 'react-bootstrap';
-import CardProduct from './CardProduct';
+  const orderProducts = useSelector(state => state.shoppingCart);
 
-const data=[
-    {
-        id: 1,
-        name: "Life Lessons with Katie Zaferes",
-        description: "I will share with you what I call \"Positively Impactful Moments of Disappointment.\" Throughout my career, many of my highest moments only came after setbacks and losses. But learning from those difficult moments is what gave me the ability to rise above them and reach my goals.",
-        price: 136,
-        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
-    },
-    {
-        id: 2,
-        name: "Learn Wedding Photography",
-        description: "Interested in becoming a wedding photographer? For beginner and experienced photographers alike, join us in learning techniques required to leave the happy couple with memories that'll last a lifetime.",
-        price: 125,
-        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
+  const [products, setProducts] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
-    },
-    {
-        id: 3,
-        name: "Group Mountain Biking",
-        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        price: 50,
-        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
-    },
-    {
-        id: 3,
-        name: "Group Mountain Biking",
-        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        price: 50,
-        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
-    },
-    {
-        id: 3,
-        name: "Group Mountain Biking",
-        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        price: 50,
-        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
-    },
-    {
-        id: 3,
-        name: "Group Mountain Biking",
-        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        price: 50,
-        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
-    },
-    {
-        id: 3,
-        name: "Group Mountain Biking",
-        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        price: 50,
-        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
-    },
-    {
-        id: 3,
-        name: "Group Mountain Biking",
-        description: "Experience the beautiful Norwegian landscape and meet new friends all while conquering rugged terrain on your mountain bike. (Bike provided!)",
-        price: 50,
-        imgUrl: "https://www.goya.com/media/7859/arepas-cornmeal-patties.jpg?quality=80"
+  const navigate = useNavigate();
+
+  const redirectToPago = () => {
+    if (orderProducts.length !== 0) {
+      handleClose();
+      navigate('/pago');
+    } else {
+      setShowOverlay(true);
     }
-]
+  };
 
+  useEffect(() => {
+    setProducts(orderProducts);
+    setTotalPrice(calculateTotal(orderProducts));
+  }, [orderProducts]);
 
-function ConfirmacionPedido({product, show, handleClose}){
+  const calculateTotal = products => {
+    let total = 0;
+    products.forEach(product => {
+      total += product.cantidad * product.productData.price;
+    });
+    return total;
+  };
 
-    const navigate = useNavigate();
-
-
-    const redirectToPago = () => {
-        navigate('/pago');
-    };
-
-    const handleExpandDetails = (product) => {
-        
-    };
-
-
-    const [products, setProducts] = useState([]);
-    useEffect(() => {
-
-        // aqui la logica que se encargar de sacar los productos del carrito que es un estado en reduxs
-
-        setProducts(data);
-
-
-
-    }, []);
-
-
-
-    
-
-
-
-
-
-
-    return(
-
-        <>
-            <Offcanvas show={show} onHide={handleClose} placement='end'>
-                <Offcanvas.Header  className='rounded-bottom shadow-sm' style={{backgroundColor: '#FEC151',border:'none',}} closeButton>
-                    <Offcanvas.Title className='my-2 fw-bold' >Confirmación Pedido</Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                {products.map(product => (
-
-                    <CardProduct product={product} handleDetails={handleExpandDetails}/>
-                    
-                ))}
-                    <Button id='button-pagar' onClick={redirectToPago} className='rounded-pill text-black fw-bold p-3 w-100 my-2' style={{backgroundColor: '#FEC151', border: 'none' }}>Confirmar y pagar</Button>
-                </Offcanvas.Body>
-            </Offcanvas>
-        </>
-        
-
-    );
-
+  return (
+    <>
+      <Offcanvas show={show} onHide={handleClose} placement="end">
+        <Offcanvas.Header className="rounded-bottom shadow-sm" style={{ backgroundColor: '#FEC151', border: 'none' }} closeButton>
+          <Offcanvas.Title className="my-2 fw-bold">Confirmación Pedido</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          {products.map(product => (
+            <ProductCardConfirmation product={product} key={product.productData.id}/>
+          ))}
+          <h4 className="text-black fw-semibold">Precio Total: ${totalPrice} </h4>
+          <Button id="button-pagar" onClick={redirectToPago} className="rounded-pill text-black fw-bold p-3 w-100 my-2" style={{ backgroundColor: '#FEC151', border: 'none' }}>
+            Confirmar y pagar
+          </Button>
+          {showOverlay && <div className="text-center">Aún no tienes nada en tu carrito, ¿Que esperas para llenarlo?</div>}
+        </Offcanvas.Body>
+      </Offcanvas>
+    </>
+  );
 }
 
 export default ConfirmacionPedido;

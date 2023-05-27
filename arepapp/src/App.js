@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, Route, Routes ,BrowserRouter, Router } from "react-router-dom";
 
 
@@ -22,6 +22,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Button } from 'react-bootstrap';
 import {setUserLogoutSesion } from './store/slicesUser/userSlice';
+import {cleanOrder} from './store/slicesOrders/ordersSlice';
 
 function App() {
 
@@ -30,13 +31,16 @@ function App() {
 
   const task = useSelector(state => state.usuarioSesion);
   const dispatch = useDispatch();
+
   
   // función quedebe migrarse al componente que tendrá el cierre de sesión
   const CerrarSeion = () =>{
     dispatch(setUserLogoutSesion({}));
+    dispatch(cleanOrder());
+
   }
   
-  console.log(task.dataUser);
+
   return (
     <>
     <BrowserRouter>
@@ -54,12 +58,14 @@ function App() {
               {
                 (task.status) ?
                 <div>
-                    <div>
-                      <p>Nombre: {task.dataUser.data[0].fullName}</p>
+                    <div className='mx-3 my-1'>
+                    <p className='fs-6  fw-light'>{task.dataUser.data[0].fullName}</p> 
+                      <p className='fs-6 fw-light'>{task.dataUser.data[0].userEmail}</p>
+                      <p className='fs-6  fw-light'>{task.dataUser.data[0].address}</p>
                     </div>
 
-                  <Nav.Link href="#">
-                  <Link onClick={()=>{CerrarSeion()}}>cerrar sesion </Link>
+                  <Nav.Link className='mx-3 rounded-pill p-2 text-center' style={{ border:'none', backgroundColor: '#FEC151'}} href="#">
+                  <Link className='text-black fw-semibold' onClick={()=>{CerrarSeion()}} style={{textDecoration:'none'}}>cerrar sesion </Link>
                   </Nav.Link> 
                 </div>
                  : <div>
