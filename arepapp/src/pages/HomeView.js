@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import CardProduct from '../component/CardProduct';
 import DetalleProducto from '../component/DetalleProducto';
-import peticiones from '../api/peticiones.js';
+import peticiones from  '../services/peticiones.js'
+
 
 function HomeView() {
   const [products, setProducts] = useState([]);

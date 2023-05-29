@@ -1,6 +1,6 @@
-// http://localhost:3001/usuario?correo=maria@web.com&pass=123456
+// http://localhost:5000/usuario?correo=maria@web.com&pass=123456
 
-const BaseUrl = 'http://localhost:3001'
+import BaseUrl from  "../enviroment/enviroment";
 
 export async function userFindByCorreoAndPass(usuario, pass){
     console.log(BaseUrl+"/customers?userEmail="+usuario+"&password="+pass);

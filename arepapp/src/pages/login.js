@@ -6,7 +6,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import {userFindByCorreoAndPass} from '../api/usuario/usuarioPeticiones';
+import {userFindByCorreoAndPass} from '../services/usuario/usuarioPeticiones';
 import {setUserLoginSesion,setUserLogoutSesion } from '../store/slicesUser/userSlice';
 import {cleanOrder} from '../store/slicesOrders/ordersSlice';
 
@@ -75,7 +75,7 @@ function Login (){
             value = {correo}
             onChange={(e) => setCorreo(e.target.value)} 
             aria-label="Default"
-            placeholder="Correo"
+            placeholder="Correo *"
             aria-describedby="inputGroup-correo-usuario"
           />
         </InputGroup>

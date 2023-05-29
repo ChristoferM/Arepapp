@@ -8,7 +8,7 @@ import DeleteProduct from '../component/DeleteProduct';
 import DetalleProducto from '../component/DetalleProducto';
 
 
-import {GetAllProducts} from '../api/peticiones.js'
+import {GetAllProducts} from '../services/peticiones.js'
 
 
 

@@ -1,4 +1,4 @@
-const BaseUrl = 'http://localhost:3001';
+import BaseUrl from './enviroment/enviroment';
 
 export const peticiones = {
   GetAllProducts: async () => {

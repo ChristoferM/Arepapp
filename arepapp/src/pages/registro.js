@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {userCreate} from '../api/usuario/usuarioPeticiones';
+import {userCreate} from '../services/usuario/usuarioPeticiones';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Card from 'react-bootstrap/Card';
@@ -17,7 +17,34 @@ const Registro = () => {
   const [alerta, setAlerta] = useState(false)
   const [Mensaje, setMensakje] = useState('');
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
 
+    if (name === 'nombre') {
+      setNombre(value);
+    } else if (name === 'correo') {
+      setCorreo(value);
+    } else if (name === 'direccion') {
+      setDireccion(value);
+    } else if (name === 'numero') {
+      setNumero(value);
+    } else if (name === 'contrasenna') {
+      setContrasenna(value);
+    } else if (name === 'confirmaciConcontrasenna') {
+      setConfirmaciConcontrasenna(value);
+    }
+  };
+  const isFormValid = () => {
+    return (
+      nombre !== '' &&
+      correo !== '' &&
+      direccion !== '' &&
+      numero !== '' &&
+      contrasenna !== '' &&
+      setConfirmaciConcontrasenna !== '' &&
+      correo.includes('@')
+    );
+  };
   const navigate = useNavigate();
 
 
@@ -61,11 +88,13 @@ const Registro = () => {
             Nombre
           </InputGroup.Text>
           <Form.Control
-            value = {nombre}
-            onChange={(e) => setNombre(e.target.value)} 
+              name="nombre"
+              value={nombre}
+            onChange={handleInputChange}
             aria-label="Default"
-            placeholder="Nombre"
+            placeholder="Nombre *"
             aria-describedby="inputGroup-nombre"
+            required 
           />
         </InputGroup>
         <InputGroup className="m-3 w-75">
@@ -73,10 +102,11 @@ const Registro = () => {
             Direccion
           </InputGroup.Text>
           <Form.Control
+          name="direccion"
             value = {direccion}
-            onChange={(e) => setDireccion(e.target.value)} 
+            onChange={handleInputChange}
             aria-label="Default"
-            placeholder="Direccion"
+            placeholder="Direccion *"
             aria-describedby="inputGroup-direccion"
           />
         </InputGroup>
@@ -85,10 +115,11 @@ const Registro = () => {
             Número
           </InputGroup.Text>
           <Form.Control
+          name = "numero"
             value = {numero}
-            onChange={(e) => setNumero(e.target.value)} 
+            onChange={handleInputChange}
             aria-label="Default"
-            placeholder="numero"
+            placeholder="numero *" 
             aria-describedby="inputGroup-numero"
           />
         </InputGroup>
@@ -99,10 +130,11 @@ const Registro = () => {
             Correo @
           </InputGroup.Text>
           <Form.Control
+          name= "correo"
             value = {correo}
-            onChange={(e) => setCorreo(e.target.value)} 
+            onChange={handleInputChange}
             aria-label="Default"
-            placeholder="Correo"
+            placeholder="Correo *"
             aria-describedby="inputGroup-correo-usuario"
           />
         </InputGroup>
@@ -112,10 +144,11 @@ const Registro = () => {
             contraseña
           </InputGroup.Text>
           <Form.Control
+          name = "contrasenna"
             value = {contrasenna}
-            onChange={(e) => setContrasenna(e.target.value)} 
+            onChange={handleInputChange}
             aria-label="Default"
-            placeholder="Contraseña"
+            placeholder="Contraseña *"
             type='password'
             aria-describedby="inputGroup-pass-usuario"
           />
@@ -125,19 +158,21 @@ const Registro = () => {
             contraseña
           </InputGroup.Text>
           <Form.Control
+          name = "confirmaciConcontrasenna"
             value = {confirmaciConcontrasenna}
-            onChange={(e) => setConfirmaciConcontrasenna(e.target.value)}
+            onChange={handleInputChange}
             aria-label="Default"
-            placeholder="Confirmar Contraseña"
+            placeholder="Confirmar Contraseña *"
             type='password'
             aria-describedby="inputGroup-pass-usuario"
+            required 
           />
         </InputGroup> 
         {
           (alerta)? <Alert key='danger' variant='danger'>
             {Mensaje} </Alert> : ''
           }
-          <Button id= "card-registrarse-boton" className='rounded-pill text-black p-2 w-100' style={{backgroundColor: '#FEC151', border: 'none'}} variant="warning" type="submit" onClick={registrarUsuario}>Registrarse</Button>
+          <Button disabled={!isFormValid()} id= "card-registrarse-boton" className='rounded-pill text-black p-2 w-100' style={{backgroundColor: '#FEC151', border: 'none'}} variant="warning" type="submit" onClick={registrarUsuario}>Registrarse</Button>
       </Card.Body>
     </Card>
   </>
