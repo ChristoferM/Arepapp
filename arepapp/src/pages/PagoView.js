@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import { Container, Row, Col, Button} from 'react-bootstrap';
 
+import { createOrder } from '../services/orders/ordersPeticiones';
+import { createOrderDetail } from '../services/ordersDetail/ordersDetailPeticiones';
+
 import ProductCardConfirmation from '../component/ProductCardConfirmation';
 import CompraFinalizada from '../component/CompraFinalizada';
 
@@ -15,22 +18,7 @@ import CompraFinalizada from '../component/CompraFinalizada';
 
 function PagoView() {
 
-
-    const [products, setProducts] = useState([]);
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [showCompraFinalizada, setShowCompraFinalizada] = useState(false);
-
-    const task = useSelector(state => state.usuarioSesion);
-    const orderProducts = useSelector(state => state.shoppingCart);
-
-  
-    const navigate = useNavigate();
-
-
-    const redirectToHome = () => {
-        navigate('/');
-    };
-
+    
     const [formData, setFormData] = useState({
         email: '',
         fullName: '',
@@ -38,31 +26,134 @@ function PagoView() {
         phoneNumber: '',
         notes: ''
     });
+    const [products, setProducts] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [showCompraFinalizada, setShowCompraFinalizada] = useState(false);
+    const [showOverlay, setShowOverlay] = useState(false);
+    const [orderId,setOrderId]=useState(0);
+
+    const task = useSelector(state => state.usuarioSesion);
+    const orderProducts = useSelector(state => state.shoppingCart);
+    
+    const values = Object.values(formData);
+    const specificProp = 'notes';
+
+    
+    const navigate = useNavigate();
+    
+    const redirectToHome = () => {
+        navigate('/');
+    };
+    
+    useEffect(() => {
+        
+        // Asignacion de valores del estado en caso de que hay usuario registrado para el post de la orden
+        if(task.status){
+            setFormData({
+                email: task.dataUser.data[0].userEmail,
+                fullName: task.dataUser.data[0].fullName,
+                address: task.dataUser.data[0].address,
+                phoneNumber: task.dataUser.data[0].phoneNumber,
+                notes: ''
+            });
+        };
+        
+        
+        setProducts(orderProducts);
+        setTotalPrice(calculateTotal(orderProducts))
+        
+    },[orderProducts]);
+    
+    // Verificar si todos los elementos, excepto uno específico, tienen algún valor
+    const allHaveValue = values.every((value, index) => {
+      return value !== '' || Object.keys(formData)[index] === specificProp;
+    });
+
+
+
 
     const handleChange = (e) => {
+        setShowOverlay(false);
         setFormData({
         ...formData,
         [e.target.name]: e.target.value
         });
     };
 
-    const handleExpandCompraFinalizada = () => {
+    const finalizarCompra = () => {
 
-        if (orderProducts.length !== 0) {
+        if (orderProducts.length !== 0 && allHaveValue) {
+
             setShowCompraFinalizada(!showCompraFinalizada);
+            registrarOrden();
+        }else{
+            setShowOverlay(true);
+            
         }
+        
+    };
+    
+    const registrarOrden = () => {
+        
+        let orderData ={
+            "deliveryFullName": formData.fullName,
+            "deliveryAddress": formData.address,
+            "deliveryPhoneNumber": formData.phoneNumber,
+            "notes": formData.notes,
+            "totalPrice": totalPrice
+            
+        }
+        
+        
+        createOrder(orderData)
+        .then(data => {
+            if( Object.keys(data).length === 0){
+                console.log('orden No creado');
+            }else{
+                console.log('orden Creada')
+                registrarDetallesOrden(data.id);
+            }
+        })
+        .catch(error => {
+            // Manejo de errores
+            console.error(error);
+        });
+
+    };
+
+    const registrarDetallesOrden = (id) => {
+
+        products.forEach(product => {
+
+            let orderDetailData = {
+                "productId": product.productData.id,
+                "quantity": product.cantidad,
+                "priceOrd": (product.productData.price * product.cantidad)
+            }
+
+
+            createOrderDetail(id,orderDetailData)
+            .then(data => {
+                if( Object.keys(data).length === 0){
+                    console.log('detalles de la orden No creados');
+                }else{
+                    console.log('detalles de orden creados');
+                }
+            })
+            .catch(error => {
+                // Manejo de errores
+                console.error(error);
+            });
+
+        })
+
+        
+
 
     };
 
 
 
-    useEffect(() => {
-
-        // aqui la logica que se encargar de sacar los productos del carrito que es un estado en reduxs
-        setProducts(orderProducts);
-        setTotalPrice(calculateTotal(orderProducts))
-
-    },[orderProducts]);
 
 
 
@@ -75,7 +166,10 @@ function PagoView() {
         })
         
         return total;
-    }
+    };
+
+
+
 
 
     // Lógica de subida de la orden y los detalles de la orden
@@ -165,14 +259,15 @@ function PagoView() {
                 </Row>
                 <Row >
                     <Col md={10}>
-                        <Button id='button-finalizar' onClick={handleExpandCompraFinalizada} className='rounded-pill text-black fw-bold p-3 w-100 my-2' style={{backgroundColor: '#FEC151', border: 'none' }}>Pagar</Button>
+                        {showOverlay && <div className="text-center">Aún no tenemos la información necesaria para un pedido</div>}
+                        <Button id='button-finalizar' onClick={finalizarCompra} className='rounded-pill text-black fw-bold p-3 w-100 my-2' style={{backgroundColor: '#FEC151', border: 'none' }}>Pagar</Button>
                     </Col>
                     <Col md={2}>
                         <Button id='button-cancelar' onClick={redirectToHome} className='rounded-pill text-black fw-bold p-3 w-100 my-2' style={{backgroundColor: '#d99843', border: 'none' }}>Cancelar</Button>
-                    </Col> 
+                    </Col>
                 </Row>
           </Container>
-          {showCompraFinalizada && <CompraFinalizada show={showCompraFinalizada} handleDelete={handleExpandCompraFinalizada} />}
+          {showCompraFinalizada && <CompraFinalizada show={showCompraFinalizada} handleDelete={() => setShowCompraFinalizada(!showCompraFinalizada)} />}
         </>
       );
     }

@@ -1,4 +1,4 @@
-import BaseUrl from './enviroment/enviroment';
+import BaseUrl from '../enviroment/enviroment';
 
 // Obtener todos los detalles de pedidos
 export async function getAllOrderDetails() {
@@ -19,8 +19,8 @@ export async function getOrderDetailsByOrderId(orderId) {
 }
 
 // Crear un nuevo detalle de pedido
-export async function createOrderDetail(orderDetailData) {
-  return await fetch(`${BaseUrl}/ordersDetail`, {
+export async function createOrderDetail(id,orderDetailData) {
+  return await fetch(`${BaseUrl}/orders/${id}/ordersDetail`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

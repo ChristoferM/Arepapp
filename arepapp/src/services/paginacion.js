@@ -1,4 +1,4 @@
-import {BaseUrl} from "./enviroment/enviroment";
+import BaseUrl from "./enviroment/enviroment";
 
 // ejemplo de prueba http://localhost:5000/products?_start=0&_limit=3
 // Obtener todos los registros de una entidad con paginación

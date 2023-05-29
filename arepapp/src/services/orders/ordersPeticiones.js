@@ -1,4 +1,4 @@
-import BaseUrl from './enviroment/enviroment';
+import BaseUrl from '../enviroment/enviroment';
 
 // Obtener todos los pedidos
 export async function getAllOrders() {
