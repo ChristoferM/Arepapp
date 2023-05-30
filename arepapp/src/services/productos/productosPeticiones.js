@@ -1,5 +1,5 @@
 // http://localhost:5000/usuario?correo=maria@web.com&pass=123456
-import BaseUrl from './enviroment/enviroment';
+import BaseUrl from '../enviroment/enviroment';
 
 // Obtener todos los productos
 export async function getAllProducts() {
@@ -60,6 +60,6 @@ export async function deleteProduct(productId) {
     });
 }
 
- export const productosPeticiones = () => {
-  return  (userFindByCorreoAndPass)
-}
+//  export const productosPeticiones = () => {
+//   return  (userFindByCorreoAndPass)
+// }
