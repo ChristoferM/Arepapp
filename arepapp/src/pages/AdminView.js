@@ -8,7 +8,7 @@ import DeleteProduct from '../component/DeleteProduct';
 import DetalleProducto from '../component/DetalleProducto';
 
 
-import {GetAllProducts} from '../api/peticiones.js'
+import {GetAllProducts} from '../services/peticiones.js'
 
 
 
@@ -128,6 +128,7 @@ function AdminView(){
     return (
 
         < >
+            
             <h1 className='m-5 fw-bold text-center'>Administración de Productos</h1>
 
             
